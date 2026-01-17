@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us. Book Haven Bookstore</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div id="siteHeader"></div>
+
+    <main class="page">
+      <h1 class="page-title">Contact Us</h1>
+
+      <div id="contactContent">
+        <p class="body-text">
+          Here at Book Haven Bookstore we care about everyone of our customers and we will always go out of our way to
+          provide the best service possible to help you out. Please contact us via any of our contact info if you have any
+          questions
+        </p>
+
+        <section class="contact-info">
+            <p class="contact-label">Phone:</p>
+            <p class="contact-value">18003410327</p>
+
+            <p class="contact-label">Email:</p>
+            <p class="contact-value">CustomerService@bookhavenbookstore.com</p>
+
+            <p class="contact-label">Address:</p>
+            <p class="contact-value">2250 East Main St</p>
+            <p class="contact-value">Minneapolis, MN 55402</p>
+        </section>
+
+        <form id="contactForm" class="contact-form">
+          <label class="form-label">Name:</label>
+          <input id="contactName" class="form-input" type="text" required />
+
+          <label class="form-label">Message:</label>
+          <textarea id="contactMessage" class="form-textarea" required></textarea>
+
+          <button class="btn btn--primary" type="submit">Submit</button>
+        </form>
+      </div>
+
+      <p id="contactThankYou" class="contact-thankyou" hidden>
+        Thank you for your message
+      </p>
+    </main>
+
+    <div id="siteFooter"></div>
+  </body>
+</html>

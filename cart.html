@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart. Book Haven Bookstore</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div id="siteHeader"></div>
+
+    <main class="page">
+      <h1 class="page-title">Cart</h1>
+
+      <section class="cart" aria-label="Shopping cart">
+        <div class="cart__head" aria-hidden="true">
+          <div class="cart__col cart__col--left">Item</div>
+          <div class="cart__col cart__col--mid">Price</div>
+          <div class="cart__col cart__col--right">Remove</div>
+        </div>
+
+        <div id="cartRows" class="cart__rows"></div>
+
+        <div class="cart__total">
+          <div class="cart__total-label">Total</div>
+          <div id="cartTotal" class="cart__total-value">$0.00</div>
+        </div>
+
+        <p id="cartEmpty" class="cart__empty" hidden>Your cart is empty.</p>
+      </section>
+
+      <!-- row under total that displays clear cart, message, and compelte  -->
+      <div class="cart-actions" aria-label="Cart actions">
+        <button id="clearCartBtn" class="btn btn--ghost" type="button">Clear Cart</button>
+
+        <p id="cartMessage" class="cart-message" aria-live="polite"></p>
+
+        <button id="checkoutBtn" class="btn btn--primary" type="button">Checkout</button>
+      </div>
+    </main>
+
+    <div id="siteFooter"></div>
+  </body>
+</html>
+

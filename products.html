@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products. Book Haven Bookstore</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div id="siteHeader"></div>
+
+    <main class="page">
+      <h1 class="page-title">Products</h1>
+
+      <!-- product grid to be rendered in html and displayed using app.js -->
+      <section class="product-grid" aria-label="Product list">
+        <article class="product-card" data-sku="book1" data-name="Brie Mine 4Ever" data-price="7.99">
+          <img class="product-card__img" src="./images/book1.png" alt="Brie Mine 4Ever book cover" />
+          <p class="product-card__desc">Brie Mine 4Ever, a book for cheese lovers</p>
+          <p class="product-card__price">$7.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="book2" data-name="Glory Rider" data-price="7.99">
+          <img class="product-card__img" src="./images/book2.png" alt="Glory Rider book cover" />
+          <p class="product-card__desc">Glory Rider, a book about bikers</p>
+          <p class="product-card__price">$7.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="book3" data-name="Sorcerer's Shadowed Chronicles" data-price="7.99">
+          <img class="product-card__img" src="./images/book3.png" alt="Sorcerer's Shadowed Chronicles book cover" />
+          <p class="product-card__desc">Sorcerer's Shadowed Chronicles, a fantasy book</p>
+          <p class="product-card__price">$7.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="mag1" data-name="Ball Magazine" data-price="4.99">
+          <img class="product-card__img" src="./images/mag1.png" alt="Ball magazine cover" />
+          <p class="product-card__desc">Ball, a magazine about pickleball</p>
+          <p class="product-card__price">$4.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="mag2" data-name="Travel Magazine" data-price="4.99">
+          <img class="product-card__img" src="./images/mag2.png" alt="Travel magazine cover" />
+          <p class="product-card__desc">Travel, a magazine for travelers</p>
+          <p class="product-card__price">$4.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="mag3" data-name="Eat Magazine" data-price="4.99">
+          <img class="product-card__img" src="./images/mag3.png" alt="Eat magazine cover" />
+          <p class="product-card__desc">Eat, a magazine for foodies</p>
+          <p class="product-card__price">$4.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="tote" data-name="All I Do Is Read Tote Bag" data-price="9.99">
+          <img class="product-card__img" src="./images/tote.png" alt="All I do is Read tote bag" />
+          <p class="product-card__desc">All i do is Read tote bag</p>
+          <p class="product-card__price">$9.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="notebook" data-name="Book Haven Bookstore Notebook" data-price="2.99">
+          <img class="product-card__img" src="./images/notebook.png" alt="Book Haven Bookstore notebook" />
+          <p class="product-card__desc">Book Haven Bookstore notebook</p>
+          <p class="product-card__price">$2.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+
+        <article class="product-card" data-sku="stickers" data-name="Book Haven Stickers" data-price="0.99">
+          <img class="product-card__img" src="./images/stickers.png" alt="Book Haven Bookstore stickers" />
+          <p class="product-card__desc">4 Book Haven Bookstore stickers</p>
+          <p class="product-card__price">$0.99</p>
+          <button class="btn btn--primary add-to-cart" type="button">Add to Cart</button>
+        </article>
+      </section>
+    </main>
+
+    <div id="siteFooter"></div>
+  </body>
+</html>

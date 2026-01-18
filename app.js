@@ -1,40 +1,43 @@
-
-const PAGES = [
-  { href: "./products.html", label: "Products" },
-  { href: "./cart.html", label: "Cart" },
-  { href: "./contact.html", label: "Contact Us" },
-  { href: "./community.html", label: "Community" },
-  { href: "./about.html", label: "About Us" }
+const PAGES = 
+[
+    { href: "./products.html", label: "Products" },
+    { href: "./cart.html", label: "Cart" },
+    { href: "./contact.html", label: "Contact Us" },
+    { href: "./community.html", label: "Community" },
+    { href: "./about.html", label: "About Us" }
 ];
 
 const CART_KEY = "bh_cart";
 
-// utilities 
-
-function getCurrentFileName() {
-  const path = window.location.pathname;
-  const file = path.split("/").pop() || "index.html";
-  return file.toLowerCase();
+//utilities
+function getCurrnetFileName()
+{
+    const path = window.location.pathname;
+    const file = path.split("/").pop() || "index.html";
+    return file.toLowerCase();
 }
 
-function money(value) {
-  const n = Number(value);
-  if (Number.isNaN(n)) return "$0.00";
-  return `$${n.toFixed(2)}`;
+function money(value)
+{
+    const n = Number(value);
+    if (Number.isNaN(n)) return "$0.00";
+    return `$${n.toFixed(2)}`;
 }
 
-// builder header 
+// build header 
 
-function buildHeader() {
-  const current = getCurrentFileName();
+function buildHeader()
+{
+    const current = getCurrnetFileName();
 
-  const linksHtml = PAGES.map((p) => {
-    const isActive = current === p.href.replace("./", "").toLowerCase();
-    const cls = isActive ? "menu-link is-active" : "menu-link";
-    return `<a class="${cls}" href="${p.href}">${p.label}</a>`;
-  }).join("");
+    const linksHtml = PAGES.map((p) => 
+    {
+        const isActive = current === p.href.replace("./", "").toLowerCase();
+        const cls = isActive ? "menu-link is-active" : "menu-link";
+        return `<a class="${cls}" href="${p.href}">${p.label}</a>`;
+    }).join("");
 
-  return `
+    return `
     <header class="site-header">
       <div class="site-header__inner">
         <div class="brand">
@@ -120,204 +123,252 @@ function buildFooter() {
     `;
 }
 
-//hamburger menu behavior 
+// hamburger menu behavior 
 
-function wireMenu() {
-  const btn = document.querySelector(".menu-button");
-  const panel = document.getElementById("menuPanel");
-  if (!btn || !panel) return;
+function wireMenu()
+{
+    const btn = document.querySelector(".menu-button");
+    const panel = document.getElementById("menuPanel");
 
-  const closeMenu = () => {
-    panel.classList.remove("is-open");
-    btn.setAttribute("aria-expanded", "false");
-  };
+    if (!btn || !panel)
+        return;
 
-  btn.addEventListener("click", () => {
-    const isOpen = panel.classList.toggle("is-open");
-    btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
+    const closeMenu = ()  => 
+    {
+        panel.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+    };
 
-  document.addEventListener("click", (e) => {
-    const target = e.target;
-    const clickedInside = panel.contains(target) || btn.contains(target);
-    if (!clickedInside) closeMenu();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeMenu();
-  });
-
-  window.addEventListener("resize", () => {
-    closeMenu();
-  });
-}
-
-//cart storage 
-
-function readCart() {
-  try {
-    const raw = localStorage.getItem(CART_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function writeCart(items) {
-  localStorage.setItem(CART_KEY, JSON.stringify(items));
-}
-
-function addToCart(item) {
-  const cart = readCart();
-  cart.push(item);
-  writeCart(cart);
-}
-
-function removeFromCart(index) {
-  const cart = readCart();
-  cart.splice(index, 1);
-  writeCart(cart);
-}
-
-function clearCart() {
-  writeCart([]);
-}
-
-// wire product page 
-
-function wireAddToCartButtons() {
-  // read product data from data attributes
-  // adds a cart item to localStorage when clicked
-  const buttons = document.querySelectorAll(".add-to-cart");
-  if (!buttons.length) return;
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const card = btn.closest(".product-card");
-      if (!card) return;
-
-      const sku = card.getAttribute("data-sku") || "";
-      const name = card.getAttribute("data-name") || "Item";
-      const price = Number(card.getAttribute("data-price") || "0");
-
-      const descEl = card.querySelector(".product-card__desc");
-      const desc = descEl ? descEl.textContent.trim() : "";
-
-      addToCart({ sku, name, desc, price });
-
-      btn.textContent = "Item added to the cart";
-      btn.disabled = true;
-
-      //reset the add button 
-      window.setTimeout(() => {
-        btn.textContent = "Add to Cart";
-        btn.disabled = false;
-      }, 900);
+    btn.addEventListener("click", () => 
+    {
+        const isOpen = panel.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
-  });
+
+    document.addEventListener("click" , (e) => 
+    {
+        const target = e.target;
+        const clickedInside = panel.contains(target) || btn.contains(target);
+        if (!clickedInside)
+            closeMenu();
+    });
+
+    document.addEventListener("keydown", (e) => 
+    {
+        if (e.key === "Escape")
+            closeMenu();
+    });
+
+    window.addEventListener("resize", () =>
+    {
+        closeMenu();
+    });
 }
 
-//cart page message
+// cart storage
+
+function readCart()
+{
+    try
+    {
+        const raw = localStorage.getItem(CART_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    }
+    catch
+    {
+        return [];
+    }
+}
+
+// write the cart to local storage 
+function writeCart(items)
+{
+    localStorage.setItem(CART_KEY, JSON.stringify(items))
+}
+
+// add item to cart
+function addToCart(item)
+{
+    const cart = readCart();
+    cart.push(item);
+    writeCart(cart);
+}
+
+// remove item from cart 
+function removeFromCart(index)
+{
+    const cart = readCart();
+    cart.splice(index, 1);
+    writeCart(cart);
+}
+
+// remove all items from cart 
+function clearCart()
+{
+    writeCart([]);
+}
+
+// wire up the product page 
+
+function wireAddToCartButtons()
+{
+    // read the procduct data from data attr & adds a cart item to local storage when clicked 
+    const buttons = document.querySelectorAll(".add-to-cart");
+
+    if (!buttons.length)
+        return;
+
+    buttons.forEach((btn) => 
+    {
+        btn.addEventListener("click", () =>
+        {
+            const card = btn.closest(".product-card");
+
+            if (!card)
+                return;
+
+            const sku = card.getAttribute("data-sku") || "";
+            const name = card.getAttribute("data-name") || "";
+            const price = Number(card.getAttribute("data-price") || "0" );
+            const descEl = card.querySelector(".product-card__desc");
+            const desc = descEl ? descEl.textContent.trim() : "";
+
+            addToCart({ sku, name, desc, price});
+
+            btn.textContent = "Item added to the cart";
+            btn.disabled = true;
+
+            // reset the add item button 
+            window.setTimeout(() => 
+            {
+                btn.textContent = "Add to Cart";
+                btn.disabled = false;
+
+            }, 900);
+        });
+    });
+}
+
+// cart page message 
 
 let messageTimerId = null;
 
-let orderSuccessVisible = false;
+let orderSuccessVisible = false
 
-function showCartMessage(text, ms) {
-  const msg = document.getElementById("cartMessage");
-  if (!msg) return;
+function showCartMessage(text, ms)
+    {
+    const msg = document.getElementById("cartMessage");
 
-  // clear any previous timers so messages do not conflict each other 
-  if (messageTimerId) {
-    window.clearTimeout(messageTimerId);
-    messageTimerId = null;
-  }
+    if (!msg)
+            return;
 
-  msg.textContent = text;
+    // clear any previous timers so messages do not conflict each other 
+    if (messageTimerId)
+    {
+        window.clearTimeout(messageTimerId);
+        messageTimerId = null;
+    }
 
-  if (typeof ms === "number" && ms > 0) {
-    messageTimerId = window.setTimeout(() => {
-      if (!orderSuccessVisible) {
-        msg.textContent = "";
-      }
-      messageTimerId = null;
-    }, ms);
-  }
+    msg.textContent = text;
+
+    if (typeof ms === "number" && ms > 0) 
+    {
+        messageTimerId = window.setTimeout(() => 
+        {
+            if (!orderSuccessVisible)
+                    {
+                    msg.textContent = "";
+                    }
+                messageTimerId = null;
+        }, ms);
+    }
 }
 
-function clearCartMessage() {
-  const msg = document.getElementById("cartMessage");
-  if (!msg) return;
+function clearCartMessage() 
+{
+    const msg = document.getElementById("cartMessage");
+    
+    if (!msg)
+            return;
 
-  if (messageTimerId) {
-    window.clearTimeout(messageTimerId);
-    messageTimerId = null;
-  }
+    if (messageTimerId) 
+    {
+        window.clearTimeout(messageTimerId);
+        messageTimerId = null;
+    }
 
-  msg.textContent = "";
+    msg.textContent = "";
 }
 
 //render cart page 
 
-function renderCartPage() {
+function renderCartPage() 
+{
   // only run when cart page rows exist 
   const rowsHost = document.getElementById("cartRows");
   const totalEl = document.getElementById("cartTotal");
   const emptyEl = document.getElementById("cartEmpty");
-  if (!rowsHost || !totalEl || !emptyEl) return;
+
+  if (!rowsHost || !totalEl || !emptyEl) 
+    return;
 
   const cart = readCart();
   rowsHost.innerHTML = "";
 
-  if (cart.length === 0) {
-    emptyEl.hidden = false;
-    totalEl.textContent = "$0.00";
-    return;
-  }
+  if (cart.length === 0) 
+    {
+        emptyEl.hidden = false;
+        totalEl.textContent = "$0.00";
+        return;
+    }
 
   emptyEl.hidden = true;
 
   let total = 0;
 
-  cart.forEach((item, index) => {
-    total += Number(item.price) || 0;
+  cart.forEach((item, index) => 
+    {
+        total += Number(item.price) || 0;
 
-    const row = document.createElement("div");
-    row.className = "cart__row";
+        const row = document.createElement("div");
+        row.className = "cart__row";
 
-    row.innerHTML = `
-      <div class="cart__item">
-        <p class="cart__item-name">${escapeHtml(item.name)}</p>
-        <p class="cart__item-desc">${escapeHtml(item.desc)}</p>
-      </div>
+        row.innerHTML = `
+        <div class="cart__item">
+            <p class="cart__item-name">${escapeHtml(item.name)}</p>
+            <p class="cart__item-desc">${escapeHtml(item.desc)}</p>
+        </div>
 
-      <p class="cart__price">${money(item.price)}</p>
+        <p class="cart__price">${money(item.price)}</p>
 
-      <button class="btn btn--ghost cart__remove" type="button" data-index="${index}">
-        Remove
-      </button>
-    `;
+        <button class="btn btn--ghost cart__remove" type="button" data-index="${index}">
+            Remove
+        </button>
+        `;
 
-    rowsHost.appendChild(row);
-  });
+        rowsHost.appendChild(row);
+    });
 
   totalEl.textContent = money(total);
 
-  // wire up remove buttons after rendering.
-  rowsHost.querySelectorAll(".cart__remove").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const idx = Number(btn.getAttribute("data-index"));
-      if (Number.isNaN(idx)) return;
+  // wire up remove buttons after rendering
 
-      removeFromCart(idx);
-      renderCartPage();
+  rowsHost.querySelectorAll(".cart__remove").forEach((btn) => 
+    {
+    btn.addEventListener("click", () => 
+        {
+            const idx = Number(btn.getAttribute("data-index"));
+            if (Number.isNaN(idx)) return;
 
-      // Message for 3 seconds. (i added this to have time to get screenshots for documentation)
-      orderSuccessVisible = false;
-      showCartMessage("Item removed", 3000);
+            removeFromCart(idx);
+            renderCartPage();
+
+            // Message for 3 seconds. (i added this to have time to get screenshots for documentation)
+            orderSuccessVisible = false;
+            showCartMessage("Item removed", 3000);
+        });
     });
-  });
 }
 
 //subscribe logic 
@@ -325,88 +376,101 @@ function renderCartPage() {
 const SUBSCRIBE_KEY = "bh_subscribed"
 const SUBSCRIBE_EMAIL_KEY = "bh_subscribed_email"
 
-function isValidEmail(email) {
+function isValidEmail(email) 
+{
   const value = String(email || "").trim()
   const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return pattern.test(value)
 }
 
-function wireSubscribe() {
+function wireSubscribe() 
+{
   const form = document.getElementById("subscribeForm")
   const input = document.getElementById("subscribeEmail")
   const thanks = document.getElementById("subscribeThanks")
-  if (!form || !input || !thanks) return
+
+  if (!form || !input || !thanks)
+     return
 
   const alreadySubscribed = localStorage.getItem(SUBSCRIBE_KEY) === "true"
-  if (alreadySubscribed) {
-    form.hidden = true
-    thanks.hidden = false
-    return
-  }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault()
-
-    const email = input.value.trim()
-
-    if (!email) {
-      console.log("Subscribe validation failed. Email is required.")
-      input.focus()
-      return
+  if (alreadySubscribed) 
+    {
+        form.hidden = true
+        thanks.hidden = false
+        return
     }
 
-    if (!isValidEmail(email)) {
-      console.log("Subscribe validation failed. Email format is invalid:", email)
-      input.focus()
-      return
-    }
+  form.addEventListener("submit", (e) => 
+    {
+        e.preventDefault()
 
-    console.log("Subscribe validation passed. Email:", email)
+        const email = input.value.trim()
 
-    localStorage.setItem(SUBSCRIBE_KEY, "true")
-    localStorage.setItem(SUBSCRIBE_EMAIL_KEY, email)
+        if (!email) {
+        console.log("Subscribe validation failed. Email is required.")
+        input.focus()
+        return
+        }
 
-    form.hidden = true
-    thanks.hidden = false
-  })
+        if (!isValidEmail(email)) {
+        console.log("Subscribe validation failed. Email format is invalid:", email)
+        input.focus()
+        return
+        }
+
+        console.log("Subscribe validation passed. Email:", email)
+
+        localStorage.setItem(SUBSCRIBE_KEY, "true")
+        localStorage.setItem(SUBSCRIBE_EMAIL_KEY, email)
+
+        form.hidden = true
+        thanks.hidden = false
+    })
 }
 
-function wireCartActions() {
+function wireCartActions() 
+{
   const clearBtn = document.getElementById("clearCartBtn");
   const checkoutBtn = document.getElementById("checkoutBtn");
   const msg = document.getElementById("cartMessage");
 
-  if (!clearBtn || !checkoutBtn || !msg) return;
+  if (!clearBtn || !checkoutBtn || !msg)
+     return;
 
   //when opening the page ensure all old messages are cleaned up 
+
   orderSuccessVisible = false;
   clearCartMessage();
 
-  clearBtn.addEventListener("click", () => {
-    clearCart();
-    renderCartPage();
+  clearBtn.addEventListener("click", () => 
+    {
+        clearCart();
+        renderCartPage();
 
-    orderSuccessVisible = false;
-    showCartMessage("Cart cleared", 3000);
-  });
+        orderSuccessVisible = false;
+        showCartMessage("Cart cleared", 3000);
+    });
 
-  checkoutBtn.addEventListener("click", () => {
-    orderSuccessVisible = false;
-    showCartMessage("Order Processed", 3000);
+  checkoutBtn.addEventListener("click", () => 
+    {
+        orderSuccessVisible = false;
+        showCartMessage("Order Processed", 3000);
 
-    //clear cart and display empty cart 
-    clearCart();
-    renderCartPage();
+        //clear cart and display empty cart 
+        clearCart();
+        renderCartPage();
 
-    // shows order successful after process order pressed 
-    orderSuccessVisible = true;
-    msg.textContent = "Thank you for your order";
-  });
+        // shows order successful after process order pressed 
+        orderSuccessVisible = true;
+        msg.textContent = "Thank you for your order";
+    });
 }
 
 //saftey to escape html
 
-function escapeHtml(value) {
+function escapeHtml(value) 
+{
   //prevents HTML injection when rendering strings into the DOM.
   return String(value)
     .replaceAll("&", "&amp;")
@@ -418,7 +482,8 @@ function escapeHtml(value) {
 
 //layout injection
 
-function injectLayout() {
+function injectLayout() 
+{
   const headerSlot = document.getElementById("siteHeader");
   const footerSlot = document.getElementById("siteFooter");
 
@@ -440,7 +505,8 @@ function wireContactForm() {
   const content = document.getElementById("contactContent");
   const thankYou = document.getElementById("contactThankYou");
 
-  if (!form || !content || !thankYou) return;
+  if (!form || !content || !thankYou)
+     return;
 
   const alreadySubmitted = localStorage.getItem(CONTACT_KEY) === "true";
 
@@ -450,14 +516,15 @@ function wireContactForm() {
     return;
   }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", (e) => 
+    {
+        e.preventDefault();
 
-    localStorage.setItem(CONTACT_KEY, "true");
+        localStorage.setItem(CONTACT_KEY, "true");
 
-    content.hidden = true;
-    thankYou.hidden = false;
-  });
+        content.hidden = true;
+        thankYou.hidden = false;
+    });
 }
 
 
